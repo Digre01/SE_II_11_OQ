@@ -1,30 +1,14 @@
-// imports
-import express from 'express';
-import cors from 'cors';
-import queueRoutes from './routes/queueRoutes.mjs';
+import dotenv from "dotenv";
+import { AppDataSource } from "./config/data-source.js";
+import app from "./app.js";
 
-// init express
-const app = new express();
-const port = 3001;
+dotenv.config();
 
-// middleware
-app.use(express.json());
+const PORT = process.env.PORT || 3000;
 
-const corsOptions = {
-  origin: 'http://localhost:5173',
-  optionsSuccessState: 200,
-  credentials: true
-};
-
-app.use(cors(corsOptions));
-
-
-// API routes
-app.use('/api/tickets', queueRoutes);
-
-app.use(express.static('public'));
-
-// activate the server
-app.listen(port, () => {
-  console.log(`Server listening at http://localhost:${port}`);
-});
+AppDataSource.initialize()
+  .then(() => {
+    console.log("Database connected");
+    app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
+  })
+  .catch((err) => console.error("Error in db connection: ", err));

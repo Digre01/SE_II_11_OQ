@@ -1,18 +1,17 @@
 import { Router } from "express";
 import {
-  newTicket
+  //newTicket,
+  getLastByServiceName
 } from "../controllers/queueController.mjs";
 
-const router = Router({ mergeParams: true });
+const router = Router();
 
 // Create a new ticket
-router.post("", async (req, res, next) => {
-  try{
-    const ticket = await newTicket(req.body);
-    res.status(201).json(ticket);
-  }catch(error){
-    next(error);
-  }
-});
+// To do 
+
+
+// GET /api/v1/tickets/:serviceName
+router.get("/:serviceName", getLastByServiceName);
+
 
 export default router;
