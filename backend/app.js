@@ -20,7 +20,8 @@ app.use(cors(corsOptions));
 
 
 // API routes
-app.use('/api/v1/tickets', queueRoutes);
+app.use('/api/v1', queueRoutes);
+app.get('/api/test', (req, res) => res.send('Hello World!'));
 
 
 export default app;

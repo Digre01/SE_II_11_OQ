@@ -1,11 +1,11 @@
 import { Ticket } from "../models/models.mjs"
 
-const SERVER_URL = "http://localhost:3001";
+const SERVER_URL = "http://localhost:3000";
 
 /* Tickets */
 // POST /api/tickets
 const newTicket = async(serviceId) => {
-  const response = await fetch(SERVER_URL + '/api/tickets', {
+  const response = await fetch(SERVER_URL + '/api/v1/tickets', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
