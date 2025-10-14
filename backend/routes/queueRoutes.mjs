@@ -1,17 +1,23 @@
 import { Router } from "express";
 import {
-  //newTicket,
-  getLastByServiceName
+  newTicket,
+  getLastByServiceName,
 } from "../controllers/queueController.mjs";
 
 const router = Router();
 
-// Create a new ticket
-// To do 
+router.post('/api/tickets', async (req, res, next) => {
+  try {
+    const serviceId = req.body.serviceId;
+    res.status(200).json(await newTicket(serviceId));
+  } catch (error) {
+    next(error);
+  }
+})
 
 
-// GET /api/v1/tickets/:serviceName
-router.get("/:serviceName", getLastByServiceName);
+// this route should call the controller function
+router.get("/:serviceName");
 
 
 export default router;
