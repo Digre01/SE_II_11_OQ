@@ -2,6 +2,7 @@
 import express from 'express';
 import cors from 'cors';
 import queueRoutes from './routes/queueRoutes.mjs';
+import serviceRoutes from './routes/serviceRoutes.mjs';
 
 // init express
 const app = new express();
@@ -19,8 +20,10 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 
+
 // API routes
 app.use('/api/v1', queueRoutes);
+app.use('/api/v1', serviceRoutes);
 app.get('/api/test', (req, res) => res.send('Hello World!'));
 
 

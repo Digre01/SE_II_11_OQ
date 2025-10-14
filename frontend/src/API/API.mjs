@@ -24,7 +24,17 @@ const newTicket = async(serviceId) => {
   }
 }
 
-/** fetch all services to fill the dropdown */
 
-const API = { newTicket };
+// GET /api/v1/services
+const fetchAllServices = async () => {
+  const response = await fetch(SERVER_URL + '/api/v1/services');
+  if(response.ok) {
+    return await response.json();
+  } else {
+    const errDetails = await response.text();
+    throw errDetails;
+  }
+}
+
+const API = { newTicket, fetchAllServices };
 export default API;

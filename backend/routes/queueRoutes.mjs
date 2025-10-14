@@ -19,7 +19,7 @@ router.post('/tickets', async (req, res, next) => {
 
 
 // this route should call the controller function
-router.get("/:serviceName");
+//router.get("/:serviceName");
 
 
 export default router;
