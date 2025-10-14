@@ -24,5 +24,7 @@ const newTicket = async(serviceId) => {
   }
 }
 
+/** fetch all services to fill the dropdown */
+
 const API = { newTicket };
 export default API;

@@ -10,8 +10,8 @@ export class QueueRepository {
     return AppDataSourcePostgres.getRepository(Queue);
   }
 
-  async enqueuePerson(serviceName) {
-    const entity = this.repo.create({ serviceName });
+  async enqueuePerson(serviceId) {
+    const entity = this.repo.create({ serviceId });
     return await this.repo.save(entity);
   }
 

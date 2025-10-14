@@ -1,10 +1,12 @@
 import { queueRepository } from "../repositories/queueRepository.mjs";
 
-export async function newTicket({ serviceName }) {
+export async function newTicket(serviceId) {
   if (!serviceName) throw new Error("serviceName mancante nel payload");
-  const created = await queueRepository.enqueuePerson(serviceName);
+  const created = await queueRepository.enqueuePerson(serviceId);
   return created; // { id, serviceName }
 }
+
+//get services
 
 /** this is a controller function, it should call the corresponding repo method or throw an error
  * and not an http status

@@ -9,8 +9,8 @@ export const Queue = new EntitySchema({
       primary: true,
       generated: 'increment' //incremental ID
     },
-    serviceName: {
-      name: 'service_name',
+    serviceId: {
+      name: 'service_id',
       type: String,          // varchar
       length: 255,
       nullable: false,
