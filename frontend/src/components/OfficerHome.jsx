@@ -1,11 +1,11 @@
 import { useState } from 'react'
-import { Dropdown, Button } from 'react-bootstrap'
+import { Dropdown, Button, Form } from 'react-bootstrap'
 import { generateTicket } from '../utils';
 
 
 function OfficerHome() {
   
-  const [selectedService, setSelectedService] = useState(null);
+  const [selectedService, setSelectedService] = useState([]);
   const [selectedDesk, setSelectedDesk] = useState(null);
   const [callMessage, setCallMessage] = useState('');
   
@@ -25,15 +25,28 @@ function OfficerHome() {
   ];
 
   const handleSelectDesk = (eventKey) => setSelectedDesk(eventKey);
-  const handleSelectService = (eventKey) => setSelectedService(eventKey);
+
+  // toggle a service id in the selectedService array
+  const handleToggleService = (serviceId) => {
+    setSelectedService(prev => {
+      if (serviceId === null) {
+        // 'None' selected -> clear all services
+        return [];
+      }
+      if (prev.includes(serviceId)) return prev.filter(s => s !== serviceId);
+      return [...prev, serviceId];
+    });
+  };
   const handleCall = () => {
     //Should be printed in a Totem
     console.log('Call', {selectedDesk, selectedService });
-    
-    //how should be
-    // setCallMessage(`Called ticket ${ generateTicket()} on Desk ${selectedDesk}`);
-    
-    setCallMessage(`Called ticket ${selectedService} on Desk ${selectedDesk}`);
+
+    // For now, if multiple services are selected, join their ids for the message.
+    const serviceLabel = selectedService.length > 0
+      ? selectedService.join(', ')
+      : 'None';
+
+    setCallMessage(`Called ticket ${serviceLabel} on Desk ${selectedDesk}`);
 
     //endpoint call here
 
@@ -63,25 +76,28 @@ function OfficerHome() {
           </Dropdown.Menu>
         </Dropdown>
 
-        <Dropdown onSelect={handleSelectService}>
-          <Dropdown.Toggle variant="success" id="dropdown-service">
-            {selectedService
-              ? (mockServices.find(s => s.id === selectedService)?.name ?? "Select a service")
-              : "Select a service"}
-          </Dropdown.Toggle>
-          <Dropdown.Menu>
-            {mockServices.map(s => (
-              <Dropdown.Item key={s.id ?? 'none'} eventKey={s.id}>
-                {s.name}
-              </Dropdown.Item>
-            ))}
-          </Dropdown.Menu>
-        </Dropdown>
+        <div className="d-flex flex-column align-items-start p-2">
+          <div className="mb-1">Select services:</div>
+          {mockServices.map(s => (
+            <Form.Check
+              key={s.id ?? 'none'}
+              type="checkbox"
+              id={`service-${s.id ?? 'none'}`}
+              label={s.name}
+              checked={s.id ? selectedService.includes(s.id) : selectedService.length === 0}
+              onChange={() => handleToggleService(s.id)}
+            />
+          ))}
+        </div>
 
+        
+      </div>
+
+      <div>
         <Button
           variant="primary"
           onClick={handleCall}
-          disabled={!selectedDesk || !selectedService}
+          disabled={!selectedDesk || selectedService.length === 0}
         >
           Call
         </Button>
