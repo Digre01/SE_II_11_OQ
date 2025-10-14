@@ -1,9 +1,13 @@
-import { AppDataSource } from "../config/data-source.js";
+import { AppDataSource, AppDataSourcePostgres } from "../config/data-source.js";
 import { Queue } from "../entities/Queue.js";
 
 export class QueueRepository {
+  // get repo() {
+  //   return AppDataSource.getRepository(Queue);
+  // }
+
   get repo() {
-    return AppDataSource.getRepository(Queue);
+    return AppDataSourcePostgres.getRepository(Queue);
   }
 
   async enqueuePerson(serviceName) {
