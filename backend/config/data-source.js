@@ -1,6 +1,7 @@
 import "reflect-metadata";
 import { DataSource } from "typeorm";
 import { Queue } from "../entities/Queue.js";
+import { Service } from "../entities/Service.js";
 import dotenv from "dotenv";
 
 dotenv.config();
