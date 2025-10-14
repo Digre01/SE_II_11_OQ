@@ -1,11 +1,11 @@
 import { Ticket } from "../models/models.mjs"
 
-const SERVER_URL = "http://localhost:3001";
+const SERVER_URL = "http://localhost:3000";
 
 /* Tickets */
 // POST /api/tickets
 const newTicket = async(serviceId) => {
-  const response = await fetch(SERVER_URL + '/api/tickets', {
+  const response = await fetch(SERVER_URL + '/api/v1/tickets', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -24,5 +24,17 @@ const newTicket = async(serviceId) => {
   }
 }
 
-const API = { newTicket };
+
+// GET /api/v1/services
+const fetchAllServices = async () => {
+  const response = await fetch(SERVER_URL + '/api/v1/services');
+  if(response.ok) {
+    return await response.json();
+  } else {
+    const errDetails = await response.text();
+    throw errDetails;
+  }
+}
+
+const API = { newTicket, fetchAllServices };
 export default API;

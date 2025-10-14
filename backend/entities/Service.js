@@ -1,25 +1,22 @@
-import { EntitySchema } from 'typeorm';
+import { EntitySchema } from "typeorm";
 
 export const Service = new EntitySchema({
-    name: 'Service',
-    tableName: 'services',
-    columns: {
-        id: {
-            type: String,          
-            primary: true,
-        },
-        name: {
-            name: 'service_name',
-            type: String,
-            length: 255,
-            nullable: false,
-            unique: true
-        },
-        avgTime: {
-            name: 'average_time',
-            type: Number >= 0,
-            nullable: false,
-            unique: false
-        }
+  name: 'Service',
+  tableName: 'services',
+  columns: {
+    serviceId: {
+      type: Number,
+      primary: true,
+      generated: 'increment'
+    },
+    name: {
+      type: String,
+      length: 255,
+      nullable: false
+    },
+    avgTime: {
+      type: Number,
+      nullable: false
     }
+  }
 });
