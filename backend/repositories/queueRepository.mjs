@@ -1,20 +1,21 @@
-import { AppDataSource, AppDataSourcePostgres } from "../config/data-source.js";
+import { AppDataSourcePostgres } from "../config/data-source.js";
 import { Queue } from "../entities/Queue.js";
 
 export class QueueRepository {
-  // get repo() {
-  //   return AppDataSource.getRepository(Queue);
-  // }
+	get repo() {
+		return AppDataSourcePostgres.getRepository(Queue);
+	}
 
-  get repo() {
-    return AppDataSourcePostgres.getRepository(Queue);
-  }
+	async createTicket(serviceId) {
+		const count = await this.repo.count({ where: { serviceId } });
+		const progressiveNumber = count + 1;
+		const listCode = `S${serviceId}-${progressiveNumber}`;
+		const entity = this.repo.create({ serviceId, ticket: listCode });
+		const saved = await this.repo.save(entity);
+		return { id: saved.id, listCode };
+	}
 
-  async enqueuePerson(serviceId) {
-    const entity = this.repo.create({ serviceId });
-    return await this.repo.save(entity);
-  }
-
+  // TO MODIFY (serviceName should be serviceId)
   async getLastByServiceName(serviceName){
     const first = await this.repo.findOne({
       where: { serviceName },

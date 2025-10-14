@@ -15,6 +15,11 @@ export const Queue = new EntitySchema({
       length: 255,
       nullable: false,
       unique: false
+    },
+    ticket: {
+      type: String,
+      length: 255,
+      nullable: false
     }
   }
 });

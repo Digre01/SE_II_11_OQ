@@ -7,12 +7,18 @@ dotenv.config();
 const PORT = process.env.PORT || 3000;
 
 import { Service } from "./entities/Service.js";
+import { Queue } from "./entities/Queue.js";
 
 AppDataSourcePostgres.initialize()
   .then(async () => {
     console.log("Database connected");
 
-    // Seeding dati tabella Service se vuota
+    // Svuota la tabella queue all'avvio (da togliere quando ci sarà la configurazione)
+    const queueRepo = AppDataSourcePostgres.getRepository(Queue);
+    await queueRepo.clear();
+    console.log("Tabella queue svuotata");
+
+    // Seeding dati tabella Service se vuota (da togliere quando ci sarà la configurazione)
     const serviceRepo = AppDataSourcePostgres.getRepository(Service);
     const existing = await serviceRepo.find();
     if (existing.length === 0) {

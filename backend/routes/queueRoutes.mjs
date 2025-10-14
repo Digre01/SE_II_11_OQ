@@ -1,25 +1,21 @@
 import { Router } from "express";
-import {
-  newTicket,
-  getLastByServiceName,
-} from "../controllers/queueController.mjs";
+import { createTicket, nextCustomerByServiceId } from "../controllers/queueController.mjs";
 
 const router = Router();
 
+// POST /api/v1/tickets
 router.post('/tickets', async (req, res, next) => {
   try {
-    const serviceId = req.body.serviceId;
-    res.status(200).json(await newTicket(serviceId));
+    const { serviceId } = req.body;
+    if (!serviceId) {
+      return res.status(400).json({ error: "serviceId is required" });
+    }
+    res.status(201).json(await createTicket(serviceId));
   } catch (error) {
     next(error);
   }
 });
 
-/** get /services */
-
-
-// this route should call the controller function
-//router.get("/:serviceName");
-
+// TODO: endpoint per nextCustomerByServiceId
 
 export default router;
