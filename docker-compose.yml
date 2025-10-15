@@ -29,6 +29,9 @@ services:
     container_name: frontend
     ports:
       - "5173:5173"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
     depends_on:
       db:
         condition: service_healthy
@@ -40,6 +43,9 @@ services:
       dockerfile: ../docker/backend/Dockerfile
     ports:
       - "3000:3000"
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
     environment:
       PG_HOST: db
       PG_PORT: 5432
@@ -49,6 +55,7 @@ services:
     depends_on:
       db:
         condition: service_healthy
+    command: npx nodemon index.mjs 
   #for watch the db  
   adminer:
     image: adminer
