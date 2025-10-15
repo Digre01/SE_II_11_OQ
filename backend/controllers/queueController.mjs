@@ -6,23 +6,8 @@ export async function createTicket(serviceId) {
   return ticket;
 }
 
-// TODO
-export async function nextCustomerByServiceId(serviceId) {
-	
+export async function nextCustomerByServiceIds(serviceIds) {
+  if (!Array.isArray(serviceIds) || serviceIds.length === 0) throw new Error("serviceIds is required");
+  const ticket = await queueRepository.nextCustomerByServiceIds(serviceIds);
+  return ticket;
 }
-
-// PRECEDENTLY WRITTEN, TO MODIFY
-/* this is a controller function, it should call the corresponding repo method or throw an error
- and not an http status
-
-export async function getLastByServiceName(req, res, next) {
-  try {
-    const { serviceName } = req.params;
-    if (!serviceName) return res.status(400).json({ error: "serviceName richiesto" });
-    const customerId = await queueRepository.getLastByServiceName(serviceName);
-    console.log(customerId);
-    return res.json(customerId);
-  } catch (err) {
-    next(err);
-  }
-*/
