@@ -1,5 +1,5 @@
 import dotenv from "dotenv";
-import { AppDataSource, AppDataSourcePostgres } from "./config/data-source.js";
+import { AppDataSourcePostgres } from "./config/data-source.js";
 import app from "./app.js";
 
 dotenv.config();
