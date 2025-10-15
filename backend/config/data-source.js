@@ -6,14 +6,6 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-export const AppDataSource = new DataSource({
-  type: "sqlite",
-  database: process.env.SQLITE_DB || "data.sqlite",
-  entities: [Queue, Service],
-  synchronize: true,
-  logging: false,
-});
-
 export const AppDataSourcePostgres = new DataSource({
   type: "postgres",
   host: process.env.PG_HOST || "localhost",

@@ -37,3 +37,9 @@ Just run:
 ``` bash
 docker compose up
 ``` 
+
+## Adminer
+Db type: postgres
+username: postgres
+password: postgres
+db: se_ii_db
