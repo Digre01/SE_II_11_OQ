@@ -1,20 +1,32 @@
-import { useState } from 'react'
-import { Dropdown, Button, Form } from 'react-bootstrap'
-import { generateTicket } from '../utils';
+import { useState, useEffect } from 'react'
+import { Dropdown, Button, Form, Alert, Spinner } from 'react-bootstrap'
+import API from '../API/API.mjs';
 
 
 function OfficerHome() {
   
+
   const [selectedService, setSelectedService] = useState([]);
   const [selectedDesk, setSelectedDesk] = useState(null);
   const [callMessage, setCallMessage] = useState('');
-  
-  const mockServices = [
-          { id: "S1", name: "Service 1" },
-          { id: "S2", name: "Service 2" },
-          { id: "S3", name: "Service 3" },
-          { id: null, name: "None" }
-  ];
+  const [services, setServices] = useState([]);
+  const [servicesLoading, setServicesLoading] = useState(true);
+  const [servicesError, setServicesError] = useState(null);
+  const [callLoading, setCallLoading] = useState(false);
+  const [callError, setCallError] = useState(null);
+
+  useEffect(() => {
+    setServicesLoading(true);
+    API.fetchAllServices()
+      .then(data => {
+        setServices(data);
+        setServicesLoading(false);
+      })
+      .catch(err => {
+        setServicesError("Failed to load services: " + err);
+        setServicesLoading(false);
+      });
+  }, []);
 
   const mockDesk = [
           {id: "D1", name: "Desk 1" },
@@ -27,6 +39,7 @@ function OfficerHome() {
   const handleSelectDesk = (eventKey) => setSelectedDesk(eventKey);
 
   // toggle a service id in the selectedService array
+
   const handleToggleService = (serviceId) => {
     setSelectedService(prev => {
       if (serviceId === null) {
@@ -37,22 +50,24 @@ function OfficerHome() {
       return [...prev, serviceId];
     });
   };
-  const handleCall = () => {
-    //Should be printed in a Totem
-    console.log('Call', {selectedDesk, selectedService });
 
-    // For now, if multiple services are selected, join their ids for the message.
-    const serviceLabel = selectedService.length > 0
-      ? selectedService.join(', ')
-      : 'None';
-
-    setCallMessage(`Called ticket ${serviceLabel} on Desk ${selectedDesk}`);
-
-    //endpoint call here
-
-    /**
-     * 
-     */
+  const handleCall = async () => {
+    setCallLoading(true);
+    setCallError(null);
+    setCallMessage('');
+    try {
+      // Chiama l'API per il prossimo ticket
+      const ticket = await API.callNextTicket(selectedService.map(Number));
+      if (ticket) {
+        setCallMessage(`Called ticket ${ticket.ticket} on Desk ${selectedDesk}`);
+      } else {
+        setCallMessage('No customers in queue for the selected services.');
+      }
+    } catch (err) {
+      setCallError("Failed to call next customer: " + err);
+    } finally {
+      setCallLoading(false);
+    }
   };
 
   
@@ -78,14 +93,16 @@ function OfficerHome() {
 
         <div className="d-flex flex-column align-items-start p-2">
           <div className="mb-1">Select services:</div>
-          {mockServices.map(s => (
+          {servicesLoading && <div>Loading services...</div>}
+          {servicesError && <div className="text-danger">{servicesError}</div>}
+          {!servicesLoading && !servicesError && services.map(s => (
             <Form.Check
-              key={s.id ?? 'none'}
+              key={s.serviceId}
               type="checkbox"
-              id={`service-${s.id ?? 'none'}`}
+              id={`service-${s.serviceId}`}
               label={s.name}
-              checked={s.id ? selectedService.includes(s.id) : selectedService.length === 0}
-              onChange={() => handleToggleService(s.id)}
+              checked={selectedService.includes(s.serviceId)}
+              onChange={() => handleToggleService(s.serviceId)}
             />
           ))}
         </div>
@@ -97,15 +114,14 @@ function OfficerHome() {
         <Button
           variant="primary"
           onClick={handleCall}
-          disabled={!selectedDesk || selectedService.length === 0}
+          disabled={!selectedDesk || selectedService.length === 0 || callLoading}
         >
-          Call
+          {callLoading ? <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" /> : "Call"}
         </Button>
       </div>
 
-
-      {callMessage && <h4>{callMessage}</h4>}
-
+  {callMessage && <Alert variant="success" className="mt-3">{callMessage}</Alert>}
+  {callError && <Alert variant="danger" className="mt-3">{callError}</Alert>}
 
     </>
   )
