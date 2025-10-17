@@ -66,14 +66,14 @@ Story n1 has less story points BUT more hours est/act than story n2 because we i
 ## QUALITY MEASURES 
 
 - Unit Testing:
-  - Total hours estimated
-  - Total hours spent
-  - Nr of automated unit test cases 
-  - Coverage
+  - Total hours estimated --> 3h
+  - Total hours spent --> 3h
+  - Nr of automated unit test cases --> 5
+  - Coverage --> 75,6% Statements, 85,29% Branches, 63,15% Functions, 84,28% Lines
 - E2E testing:
-  - Total hours estimated
-  - Total hours spent
-  - Nr of test cases
+  - Total hours estimated --> 1h 30m
+  - Total hours spent --> 1h
+  - Nr of test cases --> 5
 - Code review 
   - Total hours estimated --> 6h
   - Total hours spent --> 6h
