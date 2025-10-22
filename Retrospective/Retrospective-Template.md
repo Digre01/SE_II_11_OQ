@@ -52,8 +52,8 @@ Story n1 has less story points BUT more hours est/act than story n2 because we i
 
 |            | Mean | StDev |
 |------------|------|-------|
-| Estimation |  3h 20    |       | 
-| Actual     |  2h 40m    |       |
+| Estimation |  3h 20m    |  3h 32m     | 
+| Actual     |  2h 40m    |  2h 58m    |
 
 - Total estimation error ratio: sum of total hours spent / sum of total hours effort - 1
 
