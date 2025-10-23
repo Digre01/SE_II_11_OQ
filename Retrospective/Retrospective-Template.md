@@ -1,4 +1,4 @@
-TEMPLATE FOR RETROSPECTIVE (Team ##)
+TEMPLATE FOR RETROSPECTIVE (Team 11)
 =====================================
 
 The retrospective should include _at least_ the following
@@ -33,10 +33,10 @@ sections:
 | n  1   |    7     |    8    |     19h 30m       |      17h 10m        |  
 | n  2   |    5     |    13    |     10h 30m       |      8h 8m        |  
 
-Story n2 not done (end-to-end testing not finished)
+Story n2 cannot be considered done because end-to-end testing are missing
 
-The difference between estimated and actual is due to issues using the YouTrack tool
---> actual hours (considering also the ones not registered in the tool): 
+The difference between estimated and actual is due to issues using the YouTrack tool.
+The actual hours spent (considering also the ones not registered in the tool) are: 
 
     - Uncategorized: +4h 20m --> 28h 47m
 
@@ -98,20 +98,18 @@ Maybe it's better to assign just 1/2 people to smaller tasks
 
 - Which improvement goals set in the previous retrospective were you able to achieve? 
 
-??? (no previous retrospective)
-  
+No previous retrospective
+
 - Which ones you were not able to achieve? Why?
 
-??? (no previous retrospective)
+No previous retrospective
 
 - Improvement goals for the next sprint and how to achieve them (technical tasks, team coordination, etc.)
 
-  > Propose one or two
-
-  Better assignment to tasks, better division of the stories in tasks --> improve sprint planning
-
-  Improve YouTrack usage and general time tracking in the tool
-
+    > Improve in task division and task assignments
+  
+    > Use YouTrack more efficiently to correctly track the time
+  
 - One thing you are proud of as a Team!!
 
 Everyone did its part and we (almost) finished the stories that we wanted to do (missing just one test)
